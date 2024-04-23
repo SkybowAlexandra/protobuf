@@ -84,26 +84,15 @@ file(WRITE "${CMAKE_BINARY_DIR}/clean-all.cmake" "
 #if (EXISTS \"${CMAKE_BINARY_DIR}/CMakeCache.txt\")
 #    file(REMOVE \"${CMAKE_BINARY_DIR}/CMakeCache.txt\")
 #endif()
-#if (EXISTS \"${CMAKE_BINARY_DIR}/CMakeFiles\")
-#    file(REMOVE_RECURSE \"${CMAKE_BINARY_DIR}/CMakeFiles\")
-#endif()
-#if (EXISTS \"${CMAKE_BINARY_DIR}/Testing\")
-#    file(REMOVE_RECURSE \"${CMAKE_BINARY_DIR}/Testing\")
-#endif()
+if (EXISTS \"${CMAKE_BINARY_DIR}/CMakeFiles\")
+    file(REMOVE_RECURSE \"${CMAKE_BINARY_DIR}/CMakeFiles\")
+endif()
+if (EXISTS \"${CMAKE_BINARY_DIR}/Testing\")
+    file(REMOVE_RECURSE \"${CMAKE_BINARY_DIR}/Testing\")
+endif()
 
 
-file(GLOB LOCAL_OBJ_FILES 
-  \"${CMAKE_CURRENT_SOURCE_DIR}/*.obj\"
-  \"${CMAKE_CURRENT_SOURCE_DIR}/*.ilk\"
-  \"${CMAKE_CURRENT_SOURCE_DIR}/*.pdb\"
-  \"${CMAKE_CURRENT_SOURCE_DIR}/*.exe\"
-)
 
-foreach(LOCAL_OBJ_FILE \${LOCAL_OBJ_FILES})
-    if (EXISTS \${LOCAL_OBJ_FILE})
-    file(REMOVE \${LOCAL_OBJ_FILE})
-    endif()
-endforeach()
 
 file(REMOVE_RECURSE  ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE})
 

@@ -1,5 +1,5 @@
 #include <iostream>
-#include "msg.pb.h"
+#include "Book.pb.h"
 int main()
 {
     Book book;
@@ -11,6 +11,6 @@ int main()
     std::cout << "serialize str is " << bookstr << std::endl;
     Book book2;
     book2.ParseFromString(bookstr);
-    std::cout << "book2 name is " << book2.name() << " price is " 
-        << book2.price() << " pages is " << book2.pages() << std::endl;
+    std::cout << "book2 name is " << book2.name() << " price is "
+              << book2.price() << " pages is " << book2.pages() << std::endl;
 }
