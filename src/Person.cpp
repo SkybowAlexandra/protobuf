@@ -22,7 +22,7 @@ public:
         auto addr = p.mutable_addr();
         addr->set_addr("±±¾©");
         addr->set_num(10010);
-
+        p.set_color(Color::Blue);
         
 
         std::string output;
@@ -33,17 +33,19 @@ public:
         pp.ParseFromString(output);
         std::cout << pp.id() << std::endl;
 
+        std::cout << pp.sex() << std::endl;
+        std::cout << pp.age() << std::endl;
+
+        std::cout << pp.addr().addr() << std::endl;
+        std::cout<< pp.addr().num() << std::endl;
+        
         int size = pp.name_size();
         for(int i =0; i<size; i++)
         {
             std::cout << pp.name(i) << std::endl;
         }
 
-        std::cout << pp.sex() << std::endl;
-        std::cout << pp.age() << std::endl;
-
-        std::cout << pp.addr().addr() << std::endl;
-        std::cout<< pp.addr().num() << std::endl;
+        std::cout << pp.color() << std::endl;
 
     }
 };

@@ -67,6 +67,22 @@ file(GLOB SOURCE_FILES
   endforeach()
 
 
+# 添加生成protobuf目标
+add_custom_target(gen-protobuf
+    COMMAND ${CMAKE_COMMAND} -P "${CMAKE_BINARY_DIR}/gen-protobuf.cmake"
+    COMMENT "Generating protobuf files..."
+)
+
+file (WRITE "${CMAKE_BINARY_DIR}/gen-protobuf.cmake" 
+"
+    SET(PROTOBUF_PROTOC_EXECUTABLE ${PROTOBUF_PROTOC_EXECUTABLE})
+    file(GLOB PROTOBUF_SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/proto/*.proto)
+    execute_process(COMMAND ${PROTOBUF_PROTOC_EXECUTABLE} 
+    --cpp_out=${CMAKE_CURRENT_SOURCE_DIR}/build 
+    --proto_path=${CMAKE_CURRENT_SOURCE_DIR}/proto 
+    ${PROTOBUF_SOURCE_FILES})
+
+")
 
 
 
