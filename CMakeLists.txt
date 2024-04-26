@@ -11,7 +11,7 @@ SET(CMAKE_TOOLCHAIN_FILE "G:/vcpkg/scripts/buildsystems/vcpkg.cmake")
 #设置Debug版本
 set(CMAKE_BUILD_TYPE Debug)
 
-project(asio VERSION 0.1.0 LANGUAGES C CXX)
+project(protobuf-demo VERSION 0.1.0 LANGUAGES C CXX)
 
 
 find_program(CCACHE_PROGRAM ccache)
@@ -67,24 +67,13 @@ file(GLOB SOURCE_FILES
   endforeach()
 
 
-# 添加生成protobuf目标
-add_custom_target(gen-protobuf
-    COMMAND ${CMAKE_COMMAND} -P "${CMAKE_BINARY_DIR}/gen-protobuf.cmake"
-    COMMENT "Generating protobuf files..."
+# 添加手动生成protobuf目标
+add_custom_target(gen-protobuf 
+COMMAND ${PROTOBUF_PROTOC_EXECUTABLE} 
+--cpp_out=${CMAKE_BINARY_DIR}
+--proto_path=${CMAKE_CURRENT_SOURCE_DIR}/proto ${PROTOBUF_SOURCE_FILES}
+COMMENT "Generating Protobuf CPP files..."
 )
-
-file (WRITE "${CMAKE_BINARY_DIR}/gen-protobuf.cmake" 
-"
-    SET(PROTOBUF_PROTOC_EXECUTABLE ${PROTOBUF_PROTOC_EXECUTABLE})
-    file(GLOB PROTOBUF_SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/proto/*.proto)
-    execute_process(COMMAND ${PROTOBUF_PROTOC_EXECUTABLE} 
-    --cpp_out=${CMAKE_CURRENT_SOURCE_DIR}/build 
-    --proto_path=${CMAKE_CURRENT_SOURCE_DIR}/proto 
-    ${PROTOBUF_SOURCE_FILES})
-
-")
-
-
 
 
 # 添加清理目标
@@ -106,7 +95,6 @@ endif()
 if (EXISTS \"${CMAKE_BINARY_DIR}/Testing\")
     file(REMOVE_RECURSE \"${CMAKE_BINARY_DIR}/Testing\")
 endif()
-
 
 
 
